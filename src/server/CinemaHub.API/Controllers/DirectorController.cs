@@ -35,9 +35,18 @@ namespace CinemaHub.API.Controllers
             {
                 return BadRequest(director);
             }
-            if (director.ImageFile != null)
+            if (director.ImageFile != null || director.ClientImageFile != null)
             {
-                var fileResult = _fileService.SaveIFormFile(director.ImageFile, "directors");
+                var fileResult = "Only";
+                if (director.ClientImageFile != null)
+                {
+                    fileResult = _fileService.SaveImage(director.ClientImageFile, "directors");
+                }
+                else if (director.ImageFile != null)
+                {
+                    fileResult = _fileService.SaveIFormFile(director.ImageFile, "directors");
+                }
+
                 if (fileResult.Contains("Only") || fileResult.Contains("Error"))
                 {
                     return BadRequest(fileResult);
@@ -92,10 +101,18 @@ namespace CinemaHub.API.Controllers
             existingDirector.DateOfBirth = directorDTO.DateOfBirth;
             existingDirector.Nationality = directorDTO.Nationality;
 
-            if (directorDTO.ImageFile != null)
+            if (directorDTO.ImageFile != null || directorDTO.ClientImageFile != null )
             {
                 _fileService.DeleteImage(existingDirector.ImagePath, "directors");
-                var fileResult = _fileService.SaveIFormFile(directorDTO.ImageFile, "directors");
+                var fileResult = "Only";
+                if (directorDTO.ClientImageFile != null)
+                {
+                    fileResult = _fileService.SaveImage(directorDTO.ClientImageFile, "directors");
+                }
+                else if (directorDTO.ImageFile != null)
+                {
+                    fileResult = _fileService.SaveIFormFile(directorDTO.ImageFile, "directors");
+                }
                 if (fileResult.Contains("Only") || fileResult.Contains("Error"))
                 {
                     return BadRequest(fileResult);

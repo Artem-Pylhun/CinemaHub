@@ -24,20 +24,28 @@ namespace CinemaHub.API.Controllers
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAllActors()
         {
-            var marathons = _mapper.Map<IEnumerable<ActorDto>>(await _actorRepository.GetAllAsync());
-            return Ok(marathons);
+            var actors = await _actorRepository.GetAllAsync();
+            return Ok(actors);
         }
 
         [HttpPost("add")]
-        public async Task<ActionResult<Actor>> AddActor([FromForm] ActorCreateDto actor)
+        public async Task<ActionResult<Actor>> AddActor(ActorCreateDto actor)
         {
             if (actor == null)
             {
-                return BadRequest(actor);
+                return BadRequest("Actor wasn't found");
             }
-            if (actor.ImageFile != null)
+            if (actor.ImageFile != null || actor.ClientImageFile != null)
             {
-                var fileResult = _fileService.SaveIFormFile(actor.ImageFile, "actors");
+                var fileResult = "Only";
+                if (actor.ClientImageFile != null)
+                {
+                    fileResult = _fileService.SaveImage(actor.ClientImageFile, "actors");
+                }
+                else if (actor.ImageFile != null)
+                {
+                    fileResult = _fileService.SaveIFormFile(actor.ImageFile, "actors");
+                }
                 if (fileResult.Contains("Only") || fileResult.Contains("Error"))
                 {
                     return BadRequest(fileResult);
@@ -92,10 +100,18 @@ namespace CinemaHub.API.Controllers
             existingActor.DateOfBirth = actorDTO.DateOfBirth;
             existingActor.Nationality = actorDTO.Nationality;
 
-            if (actorDTO.ImageFile != null)
+            if (actorDTO.ImageFile != null || actorDTO.ClientImageFile != null)
             {
                 _fileService.DeleteImage(existingActor.ImagePath, "actors");
-                var fileResult = _fileService.SaveIFormFile(actorDTO.ImageFile, "actors");
+                var fileResult = "Only";
+                if(actorDTO.ClientImageFile != null)
+                {
+                    fileResult = _fileService.SaveImage(actorDTO.ClientImageFile, "actors");
+                }
+                else if(actorDTO.ImageFile != null) 
+                {
+                    fileResult = _fileService.SaveIFormFile(actorDTO.ImageFile, "actors");
+                }
                 if (fileResult.Contains("Only") || fileResult.Contains("Error"))
                 {
                     return BadRequest(fileResult);

@@ -9,7 +9,7 @@
 <EditForm Model="actor" OnSubmit="HandleSubmit" FormName="AddActor">
     <div>
         <div>
-            <label for="fname">Full name</label>
+            <label for="fullname">Full name</label>
             <InputText @bind-Value="actor.FullName" class="form-control"></InputText>
         </div>
         <div>
@@ -24,6 +24,10 @@
             <label for="nationality">Nationality</label>
             <InputText @bind-Value="actor.Nationality" class="form-control"></InputText>
         </div>
+        <div>
+            <label for "filename">Photo</label>
+            <InputFile OnChange="@GetPhoto" class="form-control"></InputFile>
+        </div>
     </div>
     <br />
     <button type="submit" class="btn btn-primary">Create actor</button>
@@ -35,11 +39,20 @@
 
     async Task HandleSubmit()
     {
+        Console.WriteLine(JsonSerializer.Serialize(actor));
         await ActorService.CreateObject(actor);
     }
 
     protected override async Task OnInitializedAsync()
     {
-        ActorService.SetEndpoint("actor");
+
+            ActorService.SetEndpoint("actor");
+    
+    }
+    public async Task GetPhoto(InputFileChangeEventArgs e)
+    {
+        var file = await e.File.ToBase64Async();
+        actor.ClientImageFile = file;
+
     }
 }
