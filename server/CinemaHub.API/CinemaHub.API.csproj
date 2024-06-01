@@ -1,0 +1,198 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="img\actors\158f1581-d661-429c-ae97-d724b9d4de25.png" />
+    <None Remove="img\actors\1a956048-5f8d-413d-a4f9-f44bd9778f86.png" />
+    <None Remove="img\actors\27271fc1-9e27-4d8b-ace6-e9b1986932a3.png" />
+    <None Remove="img\actors\2ac2aff6-7ffa-40dd-96d8-936daa8103fd.png" />
+    <None Remove="img\actors\4fc4c8be-3d9d-4ee0-8300-761b060299c9.png" />
+    <None Remove="img\actors\658d9595-2539-49dd-b121-182d0ec7bbb1.png" />
+    <None Remove="img\actors\71331fd7-e94b-44d1-9f6f-17e5b62a17c4.jpg" />
+    <None Remove="img\actors\71931219-fb24-47c1-a71a-b928ec6379b9.png" />
+    <None Remove="img\actors\7761d051-30ac-442c-82fb-61760604ff5b.png" />
+    <None Remove="img\actors\7e1ac95d-d1bd-40f6-a6a6-3eb4b4d49c15.png" />
+    <None Remove="img\actors\7e47dc9a-3cdf-4956-a08c-94616f250339.png" />
+    <None Remove="img\actors\7eba4443-0dce-4b7a-a524-069c9f6923ea.png" />
+    <None Remove="img\actors\9d31fb8b-cfc2-45fa-be56-def9c6f007eb.png" />
+    <None Remove="img\actors\a2ecbce4-f6d4-4195-a747-7afa65ea92fe.png" />
+    <None Remove="img\actors\a62db470-6249-461a-bc43-edefbdc4e9fc.png" />
+    <None Remove="img\actors\a788913b-103c-442d-8108-c925d8c8ae54.png" />
+    <None Remove="img\actors\c1c602ae-9e95-4795-9097-956410b7ef07.png" />
+    <None Remove="img\actors\d90d7a84-c1eb-455e-a18e-5eba5d965f71.png" />
+    <None Remove="img\actors\dd5b88f9-d06e-4161-b996-c0c8667e36fb.png" />
+    <None Remove="img\actors\e1a35154-21bc-4bf7-808d-bcb6426d0390.png" />
+    <None Remove="img\actors\e7a7281c-44c5-4de5-b473-a071a2c86448.png" />
+    <None Remove="img\actors\e9d7e204-5410-48b9-98f5-85df204a799f.png" />
+    <None Remove="img\actors\ecea6ab2-3f43-4a7c-bed4-2a7fe2fedbb1.png" />
+    <None Remove="img\directors\382986b7-4c30-435f-afac-987dfdffe912.png" />
+    <None Remove="img\directors\50f255cd-90e4-4bb4-9cfd-e980c07e9bb2.png" />
+    <None Remove="img\directors\7952eefa-e022-4bdb-81b6-4ed368aeed20.png" />
+    <None Remove="img\directors\875c6670-a92b-4503-843c-81ecea7a8606.png" />
+    <None Remove="img\directors\a6780ead-4ea6-4e12-9b88-df157666b49b.png" />
+    <None Remove="img\directors\b0f56a3b-f915-4c5e-9738-98943b82b862.png" />
+    <None Remove="img\directors\c2e82110-173c-45e5-87de-98b55893ba1b.png" />
+    <None Remove="img\directors\e629c836-1b3b-4693-80a6-6ded71879739.png" />
+    <None Remove="img\directors\f8e47bb0-d134-4fab-b346-9ec58c3c6d3c.png" />
+    <None Remove="img\no_photo.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="img\actors\158f1581-d661-429c-ae97-d724b9d4de25.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\1a956048-5f8d-413d-a4f9-f44bd9778f86.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\27271fc1-9e27-4d8b-ace6-e9b1986932a3.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\2ac2aff6-7ffa-40dd-96d8-936daa8103fd.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\4fc4c8be-3d9d-4ee0-8300-761b060299c9.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\658d9595-2539-49dd-b121-182d0ec7bbb1.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\71331fd7-e94b-44d1-9f6f-17e5b62a17c4.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\71931219-fb24-47c1-a71a-b928ec6379b9.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\7761d051-30ac-442c-82fb-61760604ff5b.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\7e1ac95d-d1bd-40f6-a6a6-3eb4b4d49c15.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\7e47dc9a-3cdf-4956-a08c-94616f250339.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\7eba4443-0dce-4b7a-a524-069c9f6923ea.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\9d31fb8b-cfc2-45fa-be56-def9c6f007eb.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\a2ecbce4-f6d4-4195-a747-7afa65ea92fe.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\a62db470-6249-461a-bc43-edefbdc4e9fc.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\a788913b-103c-442d-8108-c925d8c8ae54.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\c1c602ae-9e95-4795-9097-956410b7ef07.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\d90d7a84-c1eb-455e-a18e-5eba5d965f71.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\dd5b88f9-d06e-4161-b996-c0c8667e36fb.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\e1a35154-21bc-4bf7-808d-bcb6426d0390.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\e7a7281c-44c5-4de5-b473-a071a2c86448.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\e9d7e204-5410-48b9-98f5-85df204a799f.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\actors\ecea6ab2-3f43-4a7c-bed4-2a7fe2fedbb1.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\directors\382986b7-4c30-435f-afac-987dfdffe912.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\directors\50f255cd-90e4-4bb4-9cfd-e980c07e9bb2.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\directors\7952eefa-e022-4bdb-81b6-4ed368aeed20.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\directors\875c6670-a92b-4503-843c-81ecea7a8606.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\directors\a6780ead-4ea6-4e12-9b88-df157666b49b.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\directors\b0f56a3b-f915-4c5e-9738-98943b82b862.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\directors\c2e82110-173c-45e5-87de-98b55893ba1b.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\directors\e629c836-1b3b-4693-80a6-6ded71879739.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\directors\f8e47bb0-d134-4fab-b346-9ec58c3c6d3c.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="img\no_photo.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\client\CinemaHub.Infrastructure\CinemaHub.Infrastructure.csproj" />
+    <ProjectReference Include="..\CinemaHub.Domain\CinemaHub.Domain.csproj" />
+    <ProjectReference Include="..\CinemaHub.Repositories\CinemaHub.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>

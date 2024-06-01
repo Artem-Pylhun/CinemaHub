@@ -1,0 +1,67 @@
+﻿@page "/genre/get-all"
+@inject NavigationManager Navigation
+@inject IObjService<GenreDto, GenreCreateDto, GenreUpdateDto> GenreService
+@inject IMapper mapper
+<link href="~/css/bootstrap/bootstrap.min.css">
+<div class="float-end" style="width:10px"></div>
+
+
+
+
+<a href="/genre/add" class="btn btn-success float-end">Add Genre</a>
+<div class="float-end" style="width:10px"></div>
+<h2 class="mt-3 mb-3">Genres</h2>
+
+@if (genres == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!genres.Any())
+{
+    <p>No genres available.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr class="text-center align-middle">
+                <th>Genre Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var genre in genres)
+            {
+                <tr class="text-center align-middle">
+                    <td><strong>@genre.Title</strong></td>
+                    <td class="text-center d-flex justify-content-evenly">
+                        <a href="genre/@genre.Id" class="btn btn-warning w-25">Edit</a>
+                        <button @onclick="() => Delete(genre.Id)" class="btn btn-danger w-25">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<GenreDto> genres = new List<GenreDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            GenreService.SetEndpoint("genre");
+            genres = await GenreService.GetObjects();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching genre: {ex.Message}");
+        }
+    }
+    async Task Delete(Guid id)
+    {
+        await GenreService.DeleteObject(id);
+        genres = await GenreService.GetObjects();
+    }
+}

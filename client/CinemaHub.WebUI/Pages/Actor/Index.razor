@@ -1,0 +1,107 @@
+﻿@page "/actor/get-all"
+@inject NavigationManager Navigation
+@inject IObjService<ActorDto, ActorCreateDto, ActorUpdateDto> ActorService
+@inject IMapper mapper
+<link href="~/css/bootstrap/bootstrap.min.css">
+<div class="float-end" style="width:10px"></div>
+
+
+<div class="d-flex flex-row justify-content-around align-items-center">
+    <h2 class="mt-3 mb-3">Actors</h2>
+    <div class="d-flex flex-row gap-3 align-items-center">
+        <a href="/actor/add" class="btn btn-success float-end">Add Actor</a>
+        <button @onclick="() => ViewToggle()" class="btn btn-info">@(_cardView ? "Table" : "Card") View</button>
+    </div>
+</div>
+@if (actors == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!actors.Any())
+{
+    <p>No actors available.</p>
+}
+else
+{
+    @if(!_cardView)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr class="text-center align-middle">
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Date of birth</th>
+                    <th>Nationality</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var actor in actors)
+                {
+                    <tr class="text-center align-middle">
+                        <td><strong>@actor.FullName</strong></td>
+                        <td><strong>@actor.Gender</strong></td>
+                        <td><strong>@actor.DateOfBirth.ToString("dd.MM.yyyy")</strong></td>
+                        <td><strong>@actor.Nationality</strong></td>
+                        <td><img src="@actor.ImagePath" style="max-width: 300px; max-height: 300px;" /></td>
+                        <td class="text-center d-flex justify-content-evenly">
+                            <a href="actor/@actor.Id" class="btn btn-warning w-25">Edit</a>
+                            <button @onclick="() => Delete(actor.Id)" class="btn btn-danger w-25">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }else
+    {
+        <div class="row d-flex flex-row gap-3 justify-content-around">
+            @foreach (var actor in actors)
+            {
+                <div class="card col-3" style="width: 18rem;">
+                    <img class="card-img-top" src="@actor.ImagePath" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@actor.FullName</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Gender: @actor.Gender</li>
+                        <li class="list-group-item">Date of birth: @actor.DateOfBirth.ToString("dd.MM.yyyy")</li>
+                        <li class="list-group-item">Nationality: @actor.Nationality</li>
+                    </ul>
+                    <div class="card-body d-flex flex-row g-1 justify-content-around">
+                        <a href="actor/@actor.Id" class="btn btn-warning" style="width: 40%;">Edit</a>
+                        <button @onclick="() => Delete(actor.Id)" class="btn btn-danger" style="width: 40%;">Delete</button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}
+
+@code {
+    private bool _cardView = false;
+    private List<ActorDto> actors= new List<ActorDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            ActorService.SetEndpoint("actor");
+            actors = await ActorService.GetObjects();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching actor: {ex.Message}");
+        }
+    }
+    async Task Delete(Guid id)
+    {
+        await ActorService.DeleteObject(id);
+        actors = await ActorService.GetObjects();
+    }
+
+    async Task ViewToggle()
+    {
+        _cardView = _cardView ? false : true;
+    }
+}
