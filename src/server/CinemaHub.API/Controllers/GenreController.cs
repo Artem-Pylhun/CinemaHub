@@ -57,7 +57,7 @@ namespace CinemaHub.API.Controllers
         public async Task<ActionResult<Genre>> UpdateGenre(GenreUpdateDto genreDTO)
         {
             var genre = _mapper.Map<Genre>(genreDTO);
-            if (genre.Id == null)
+            if (genre == null)
             {
                 return BadRequest("Genre not found");
             }

@@ -82,7 +82,7 @@ namespace CinemaHub.API.Controllers
         public async Task<ActionResult<Actor>> UpdateActor(ActorUpdateDto actorDTO)
         {
             var actor = _mapper.Map<Actor>(actorDTO);
-            if (actor.Id == null)
+            if (actor == null)
             {
                 return BadRequest("Actor not found");
             }

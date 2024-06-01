@@ -27,7 +27,7 @@ namespace CinemaHub.API.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddGenre(CinemaCreateDto cinema)
+        public async Task<ActionResult<Cinema>> AddGenre(CinemaCreateDto cinema)
         {
             if (cinema == null)
             {
@@ -36,9 +36,18 @@ namespace CinemaHub.API.Controllers
             await _cinemaRepository.CreateAsync(_mapper.Map<Cinema>(cinema));
             return Ok(cinema);
         }
-
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Cinema>> GetCinemaById(Guid id)
+        {
+            var cinema = await _cinemaRepository.GetAsync(id);
+            if (cinema is null)
+            {
+                return NotFound("Cinema not found");
+            }
+            return Ok(cinema);
+        }
         [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteCinema(Guid id)
+        public async Task<ActionResult> DeleteCinema(Guid id)
         {
             var cinema = await _cinemaRepository.GetAsync(id);
             if (cinema == null)
@@ -47,6 +56,29 @@ namespace CinemaHub.API.Controllers
             }
             await _cinemaRepository.DeleteAsync(id);
             return Ok($"Cinema {cinema.Title} deleted");
+        }
+        [HttpPut("update")]
+        public async Task<ActionResult<Cinema>> UpdateCinema(CinemaUpdateDto cinemaDto)
+        {
+            var cinema = _mapper.Map<Cinema>(cinemaDto);
+            if (cinema == null)
+            {
+                return BadRequest("Cinema not found");
+            }
+
+            var existingCinema = await _cinemaRepository.GetAsync(cinema.Id);
+            if (existingCinema is null)
+            {
+                return BadRequest("Cinema not found");
+            }
+
+            existingCinema.Title = cinemaDto.Title;
+            existingCinema.Location = cinemaDto.Location;
+            existingCinema.PhoneNumber = cinemaDto.PhoneNumber;
+
+            await _cinemaRepository.UpdateAsync(existingCinema);
+
+            return Ok(existingCinema);
         }
     }
 }
