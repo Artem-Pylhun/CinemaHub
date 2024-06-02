@@ -1,0 +1,45 @@
+﻿@page "/screenSize/update/{id:guid}"
+@using System.Text.Json
+@inject IObjService<ScreenSizeDto, ScreenSizeCreateDto, ScreenSizeUpdateDto> ScreenSizeService
+@inject IMapper _mapper
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit @($"{screenSize.Width} X {screenSize.Height}") screen size</PageTitle>
+<h3>Edit @($"{screenSize.Width} X {screenSize.Height}") screen size</h3>
+<EditForm Model="screenSize" OnSubmit="HandleEditSubmit" FormName="EditScreenSize">
+    <div>
+        <label for="width">Width</label>
+        <InputNumber @bind-Value="screenSize.Width" class="form-control"></InputNumber>
+        <label for="height">Height</label>
+        <InputNumber @bind-Value="screenSize.Height" class="form-control"></InputNumber>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Create Screen size</button>
+</EditForm>
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+    ScreenSizeUpdateDto screenSize = new ScreenSizeUpdateDto();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+            var result = await ScreenSizeService.GetObjectById((Guid)Id);
+            if (result is not null)
+            {
+                screenSize = _mapper.Map<ScreenSizeUpdateDto>(result);
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/screenSize/add");
+            }
+        }
+    }
+
+    async Task HandleEditSubmit()
+    {
+        await ScreenSizeService.UpdateObject(screenSize);
+    }
+}
+

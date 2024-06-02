@@ -1,0 +1,91 @@
+﻿@page "/hall/add"
+@using System.Text.Json
+@inject IObjService<CinemaDto, CinemaCreateDto, CinemaUpdateDto> CinemaService
+@inject IObjService<HallDto, HallCreateDto, HallUpdateDto> HallService
+@inject IObjService<ScreenSizeDto, ScreenSizeCreateDto, ScreenSizeUpdateDto> ScreenSizeService
+@inject IMapper _mapper
+@inject NavigationManager NavigationManager
+
+
+<PageTitle>Add hall</PageTitle>
+<h3>Add hall</h3>
+<EditForm Model="hall" OnSubmit="HandleSubmit" FormName="AddCinema">
+    <div>
+        <label>Title</label>
+        <InputText @bind-Value="hall.Title" class="form-control"></InputText>
+    </div>
+    <div>
+        <label>Rows number</label>
+        <InputNumber @bind-Value="hall.RowsNumber" class="form-control" @onchange="UpdateRowOptions"></InputNumber>
+    </div>
+    <div>
+        <label>Columns number</label>
+        <InputNumber @bind-Value="hall.ColumnsNumber" class="form-control"></InputNumber>
+    </div>
+    <div>
+        <label>Cinema</label>
+        <InputSelect @bind-Value="hall.CinemaId" class="form-control">
+            <option value="">Select cinema...</option>
+            @foreach (var cinema in cinemas)
+            {
+                <option value="@cinema.Id">@cinema.Title</option>
+            }
+        </InputSelect>
+    </div>
+    <div>
+        <label>Screen size</label>
+        <InputSelect @bind-Value="hall.ScreenSizeId" class="form-control">
+            <option value="">Select size...</option>
+            @foreach (var size in screenSizes)
+            {
+                <option value="@size.Id">@($"{size.Width} X {size.Height}")</option>
+            }
+        </InputSelect>
+    </div>
+    <div>
+        <label>VIP Rows</label>
+        <select multiple id="vipRows" class="form-control" @onchange="OnRowsSelected">
+            @for (int i = 1; i <= hall.RowsNumber; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Create Hall</button>
+</EditForm>
+
+@code {
+    HallCreateDto hall { get; set; } = new HallCreateDto();
+    List<CinemaDto> cinemas = new List<CinemaDto>();
+    List<ScreenSizeDto> screenSizes = new List<ScreenSizeDto>();
+    List<int> selectedRows = new List<int>();
+    List<int> availableRows = new List<int>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        cinemas = await CinemaService.GetObjects();
+        screenSizes = await ScreenSizeService.GetObjects();
+    }
+
+    void UpdateRowOptions()
+    {
+        availableRows.Clear();
+        for (int i = 1; i <= hall.RowsNumber; i++)
+        {
+            availableRows.Add(i);
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        hall.VipRows = selectedRows;
+        await HallService.CreateObject(hall);
+    }
+    
+    void OnRowsSelected(ChangeEventArgs e)
+    {
+        var selectedOptions = ((IEnumerable<object>)((ChangeEventArgs)e).Value);
+        selectedRows = selectedOptions.Select(option => int.Parse(option.ToString())).ToList();
+    }
+}

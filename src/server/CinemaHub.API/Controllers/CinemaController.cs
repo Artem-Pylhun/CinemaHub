@@ -75,7 +75,7 @@ namespace CinemaHub.API.Controllers
             existingCinema.Title = cinemaDto.Title;
             existingCinema.Location = cinemaDto.Location;
             existingCinema.PhoneNumber = cinemaDto.PhoneNumber;
-
+            
             await _cinemaRepository.UpdateAsync(existingCinema);
 
             return Ok(existingCinema);

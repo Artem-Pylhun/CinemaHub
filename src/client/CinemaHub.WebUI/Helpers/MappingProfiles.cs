@@ -20,6 +20,21 @@ namespace CinemaHub.API.Helpers
             CreateMap<Director, DirectorDto>().ReverseMap();
             CreateMap<Director, DirectorCreateDto>().ReverseMap();
             CreateMap<Director, DirectorUpdateDto>().ReverseMap();
+
+            CreateMap<Cinema, CinemaDto>().ReverseMap();
+            CreateMap<Cinema, CinemaCreateDto>().ReverseMap();
+            CreateMap<Cinema, CinemaUpdateDto>().ReverseMap();
+            CreateMap<CinemaDto, CinemaUpdateDto>().ReverseMap();
+
+            CreateMap<ScreenSize, ScreenSizeDto>().ReverseMap();
+            CreateMap<ScreenSize, ScreenSizeCreateDto>().ReverseMap();
+            CreateMap<ScreenSize, ScreenSizeUpdateDto>().ReverseMap();
+            CreateMap<ScreenSizeDto, ScreenSizeUpdateDto>().ReverseMap();
+
+            CreateMap<Hall, HallDto>().ReverseMap();
+            CreateMap<Hall, HallCreateDto>().ReverseMap();
+            CreateMap<Hall, HallUpdateDto>().ReverseMap();
+            CreateMap<HallDto, HallUpdateDto>().ReverseMap();
         }
     }
 }

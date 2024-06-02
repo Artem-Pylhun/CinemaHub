@@ -18,10 +18,7 @@
     [Parameter]
     public Guid? Id { get; set; }
     GenreUpdateDto genre = new GenreUpdateDto();
-    protected override async Task OnInitializedAsync()
-    {
 
-    }
     protected override async Task OnParametersSetAsync()
     {
         if (Id is not null)
@@ -30,7 +27,6 @@
             if (result is not null)
             {
                 genre = _mapper.Map<GenreUpdateDto>(result);
-
             }
             else
             {

@@ -124,11 +124,11 @@ namespace CinemaHub.API.Controllers
                         Column = j,
                         Number = (i - 1) * existingHall.ColumnsNumber + j
                     };
+                    await _seatRepository.CreateAsync(seat);
                     seats.Add(seat);
                 }
             }
             existingHall.Seats = seats;
-
             await _hallRepository.UpdateAsync(existingHall);
             return Ok(existingHall);
         }

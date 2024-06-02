@@ -16,6 +16,8 @@ namespace CinemaHub.Infrastructure.DTOs
         public int ColumnsNumber { get; set; }
         public Guid? ScreenSizeId { get; set; }
         public Guid? CinemaId { get; set; }
+        public string? CinemaTitle { get; set; }
+        public string? ScreenSize { get; set; }
     }
     public class HallCreateDto
     {
