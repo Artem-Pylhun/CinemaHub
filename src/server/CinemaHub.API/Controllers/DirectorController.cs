@@ -29,7 +29,7 @@ namespace CinemaHub.API.Controllers
             return Ok(marathons);
         }
         [HttpPost("add")]
-        public async Task<ActionResult<Director>> AddDirector([FromForm] DirectorCreateDto director)
+        public async Task<ActionResult<Director>> AddDirector([FromBody] DirectorCreateDto director)
         {
             if (director == null)
             {
@@ -80,7 +80,7 @@ namespace CinemaHub.API.Controllers
             return Ok($"Director {director.FullName} deleted");
         }
         [HttpPut("update")]
-        public async Task<ActionResult<Director>> UpdateDirector(DirectorUpdateDto directorDTO)
+        public async Task<ActionResult<Director>> UpdateDirector([FromBody]DirectorUpdateDto directorDTO)
         {
             var director = _mapper.Map<Director>(directorDTO);
             if (director == null)

@@ -27,7 +27,7 @@ namespace CinemaHub.API.Implementation
             }
             catch (Exception ex)
             {
-                return false;
+                throw new Exception("An error occurred while saving the file from server", ex);
             }
         }
 

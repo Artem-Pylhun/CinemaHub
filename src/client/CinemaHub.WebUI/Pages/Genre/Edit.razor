@@ -1,4 +1,4 @@
-﻿@page "/genre/{id:guid}"
+﻿@page "/genre/update/{id:guid}"
 @using System.Text.Json
 @inject IObjService<GenreDto, GenreCreateDto, GenreUpdateDto> GenreService
 @inject IMapper _mapper
@@ -18,10 +18,7 @@
     [Parameter]
     public Guid? Id { get; set; }
     GenreUpdateDto genre = new GenreUpdateDto();
-    protected override async Task OnInitializedAsync()
-    {
 
-    }
     protected override async Task OnParametersSetAsync()
     {
         if (Id is not null)

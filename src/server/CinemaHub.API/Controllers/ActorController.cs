@@ -27,9 +27,8 @@ namespace CinemaHub.API.Controllers
             var actors = await _actorRepository.GetAllAsync();
             return Ok(actors);
         }
-
         [HttpPost("add")]
-        public async Task<ActionResult<Actor>> AddActor(ActorCreateDto actor)
+        public async Task<ActionResult<Actor>> AddActor([FromBody]ActorCreateDto actor)
         {
             if (actor == null)
             {
@@ -79,7 +78,7 @@ namespace CinemaHub.API.Controllers
             return Ok($"Actor {actor.FullName} deleted");
         }
         [HttpPut("update")]
-        public async Task<ActionResult<Actor>> UpdateActor(ActorUpdateDto actorDTO)
+        public async Task<ActionResult<Actor>> UpdateActor([FromBody]ActorUpdateDto actorDTO)
         {
             var actor = _mapper.Map<Actor>(actorDTO);
             if (actor == null)
