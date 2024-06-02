@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using CinemaHub.Infrastructure.DTOs;
+using CinemaHub.WebUI.Configs;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CinemaHub.WebUI
 {
@@ -17,9 +19,8 @@ namespace CinemaHub.WebUI
             builder.RootComponents.Add<HeadOutlet>("head::after");
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            
-            
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7144") });
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(AppConstants.ServerBaseUrl) });
+
             builder.Services.AddScoped(typeof(IObjService<,,>), typeof(ObjService<,,>));
             var options = new JsonSerializerOptions
             {

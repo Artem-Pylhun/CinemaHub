@@ -19,7 +19,7 @@ namespace CinemaHub.Domain.Entities
         public DateTime DateOfBirth { get; set; }
         public string Nationality { get; set; }
         public virtual ICollection<Movie> Movies { get; set; } = new HashSet<Movie>();
-        public string ImagePath { get; set; } = "/img/no_photo.jpg";
+        public string? ImagePath { get; set; } = "/img/no_photo.jpg";
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
     }

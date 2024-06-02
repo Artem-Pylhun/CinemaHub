@@ -15,12 +15,15 @@ namespace CinemaHub.Infrastructure.DTOs
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Nationality { get; set; }
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
+        [NotMapped]
+        public string? ClientImageFile { get; set; }
     }
     public class ActorCreateDto
     {
+        public Guid Id = Guid.NewGuid();
         public string FullName { get; set; }
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -28,6 +31,8 @@ namespace CinemaHub.Infrastructure.DTOs
         public string? ImagePath { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
+        [NotMapped]
+        public string? ClientImageFile { get; set; }
     }
     public class ActorUpdateDto
     {
@@ -39,5 +44,7 @@ namespace CinemaHub.Infrastructure.DTOs
         public string? ImagePath { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
+        [NotMapped]
+        public string? ClientImageFile { get; set; }
     }
 }

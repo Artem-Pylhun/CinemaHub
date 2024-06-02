@@ -1,7 +1,6 @@
 ﻿@page "/genre/get-all"
 @inject NavigationManager Navigation
 @inject IObjService<GenreDto, GenreCreateDto, GenreUpdateDto> GenreService
-@inject IMapper mapper
 <link href="~/css/bootstrap/bootstrap.min.css">
 <div class="float-end" style="width:10px"></div>
 
@@ -35,7 +34,7 @@ else
                 <tr class="text-center align-middle">
                     <td><strong>@genre.Title</strong></td>
                     <td class="text-center d-flex justify-content-evenly">
-                        <a href="genre/@genre.Id" class="btn btn-warning w-25">Edit</a>
+                        <a href="genre/update/@genre.Id" class="btn btn-warning w-25">Edit</a>
                         <button @onclick="() => Delete(genre.Id)" class="btn btn-danger w-25">Delete</button>
                     </td>
                 </tr>

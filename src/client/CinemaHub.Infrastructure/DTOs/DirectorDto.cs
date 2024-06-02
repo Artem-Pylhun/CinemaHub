@@ -15,9 +15,12 @@ namespace CinemaHub.Infrastructure.DTOs
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Nationality { get; set; }
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
+        [NotMapped]
+        public string? ClientImageFile { get; set; }
+
     }
     public class DirectorCreateDto
     {
@@ -28,6 +31,9 @@ namespace CinemaHub.Infrastructure.DTOs
         public string? ImagePath { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
+        [NotMapped]
+        public string? ClientImageFile { get; set; }
+
     }
     public class DirectorUpdateDto
     {
@@ -39,5 +45,8 @@ namespace CinemaHub.Infrastructure.DTOs
         public string? ImagePath { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
+        [NotMapped]
+        public string? ClientImageFile { get; set; }
+
     }
 }

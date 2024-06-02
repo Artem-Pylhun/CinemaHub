@@ -29,15 +29,24 @@ namespace CinemaHub.API.Controllers
             return Ok(marathons);
         }
         [HttpPost("add")]
-        public async Task<ActionResult<Director>> AddDirector([FromForm] DirectorCreateDto director)
+        public async Task<ActionResult<Director>> AddDirector([FromBody] DirectorCreateDto director)
         {
             if (director == null)
             {
                 return BadRequest(director);
             }
-            if (director.ImageFile != null)
+            if (director.ImageFile != null || director.ClientImageFile != null)
             {
-                var fileResult = _fileService.SaveIFormFile(director.ImageFile, "directors");
+                var fileResult = "Only";
+                if (director.ClientImageFile != null)
+                {
+                    fileResult = _fileService.SaveImage(director.ClientImageFile, "directors");
+                }
+                else if (director.ImageFile != null)
+                {
+                    fileResult = _fileService.SaveIFormFile(director.ImageFile, "directors");
+                }
+
                 if (fileResult.Contains("Only") || fileResult.Contains("Error"))
                 {
                     return BadRequest(fileResult);
@@ -71,7 +80,7 @@ namespace CinemaHub.API.Controllers
             return Ok($"Director {director.FullName} deleted");
         }
         [HttpPut("update")]
-        public async Task<ActionResult<Director>> UpdateDirector(DirectorUpdateDto directorDTO)
+        public async Task<ActionResult<Director>> UpdateDirector([FromBody]DirectorUpdateDto directorDTO)
         {
             var director = _mapper.Map<Director>(directorDTO);
             if (director == null)
@@ -92,10 +101,18 @@ namespace CinemaHub.API.Controllers
             existingDirector.DateOfBirth = directorDTO.DateOfBirth;
             existingDirector.Nationality = directorDTO.Nationality;
 
-            if (directorDTO.ImageFile != null)
+            if (directorDTO.ImageFile != null || directorDTO.ClientImageFile != null )
             {
                 _fileService.DeleteImage(existingDirector.ImagePath, "directors");
-                var fileResult = _fileService.SaveIFormFile(directorDTO.ImageFile, "directors");
+                var fileResult = "Only";
+                if (directorDTO.ClientImageFile != null)
+                {
+                    fileResult = _fileService.SaveImage(directorDTO.ClientImageFile, "directors");
+                }
+                else if (directorDTO.ImageFile != null)
+                {
+                    fileResult = _fileService.SaveIFormFile(directorDTO.ImageFile, "directors");
+                }
                 if (fileResult.Contains("Only") || fileResult.Contains("Error"))
                 {
                     return BadRequest(fileResult);

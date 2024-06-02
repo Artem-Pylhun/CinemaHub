@@ -1,0 +1,65 @@
+﻿@page "/director/update/{id:guid}"
+@using System.Text.Json
+@inject IObjService<DirectorDto, DirectorCreateDto, DirectorUpdateDto> DirectorService
+@inject IMapper _mapper
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit @director.FullName director</PageTitle>
+<h3>Edit @director.FullName director</h3>
+<EditForm Model="director" OnSubmit="HandleSubmit" FormName="EditDirector">
+    <div>
+        <div>
+            <label for="fullname">Full name</label>
+            <InputText @bind-Value="director.FullName" class="form-control"></InputText>
+        </div>
+        <div>
+            <label for="gender">Gender</label>
+            <InputText @bind-Value="director.Gender" class="form-control"></InputText>
+        </div>
+        <div>
+            <label for="dateOfBirth">Full name</label>
+            <InputDate @bind-Value="director.DateOfBirth" class="form-control"></InputDate>
+        </div>
+        <div>
+            <label for="nationality">Nationality</label>
+            <InputText @bind-Value="director.Nationality" class="form-control"></InputText>
+        </div>
+        <div>
+            <label for "filename">Photo</label>
+            <InputFile OnChange="@GetPhoto" class="form-control"></InputFile>
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Edit director</button>
+</EditForm>
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+    DirectorUpdateDto director = new DirectorUpdateDto();
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+            var result = await DirectorService.GetObjectById(Id.Value);
+            if (result is not null)
+            {
+                director = _mapper.Map<DirectorUpdateDto>(result);
+
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/director/add");
+            }
+        }
+    }
+    async Task HandleSubmit()
+    {
+        await DirectorService.UpdateObject(director);
+    }
+    public async Task GetPhoto(InputFileChangeEventArgs e)
+    {
+        var file = await e.File.ToBase64Async();
+        director.ClientImageFile = file;
+
+    }
+}
