@@ -9,17 +9,24 @@
 
 
 <PageTitle>Movie @movie.Title</PageTitle>
-<div class="d-flex flex-row justify-content-around">
+<div class="d-flex flex-column justify-content-center ">
     <div>
-        <h3>@movie.Title @movie.MinAge +</h3>
-        <img src="@movie.PosterUrl" style="max-height: 60vh;" />
+        <h3 class="mb-5 text-center">@movie.Title @movie.MinAge +</h3>
     </div>
-    <div class="d-flex flex-column justify-content-between">
-        <p>Release date: @movie.Release.ToShortDateString()</p>
-        <p>Duration minutes: @movie.Duration</p>
-        <p>@(movie.Genres != null ? string.Join(", ", movie.Genres) : "No genres available")</p>
-        <p>@(movie.Actors != null ? string.Join(", ", movie.Actors) : "No actors available")</p>
-        <p>@(movie.Directors != null ? string.Join(", ", movie.Directors) : "No directors available")</p>
+
+
+    <div class=" d-flex flex-row justify-content-around p-3  gap-3">
+        <div>
+
+            <img src="@movie.PosterUrl" class=" shadow-sm" style="max-height: 60vh;" />
+        </div>
+        <div class="d-flex flex-column justify-content-center border border-2 rounded-2 px-2 shadow-sm">
+        <p><strong>Release date:</strong> @movie.Release.ToShortDateString()</p>
+        <p><strong>Duration minutes:</strong> @movie.Duration</p>
+        <p><strong>Genres</strong>: @(movie.Genres != null ? string.Join(", ", movie.Genres) : "No genres available")</p>
+        <p><strong>Actors:</strong> @(movie.Actors != null ? string.Join(", ", movie.Actors) : "No actors available")</p>
+        <p><strong>Directors:</strong> @(movie.Directors != null ? string.Join(", ", movie.Directors) : "No directors available")</p>
+        </div>
     </div>
 </div>
 
