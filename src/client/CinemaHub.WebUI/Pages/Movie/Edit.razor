@@ -10,7 +10,7 @@
 
 <PageTitle>Edit movie @movie.Title</PageTitle>
 <h3>Edit movie @movie.Title</h3>
-<EditForm Model="movie" OnSubmit="HandleEditSubmit" FormName="EditMovie">
+<EditForm Model="movie" OnSubmit="HandleEditSubmit" FormName="EditMovie" class="my-2">
     <div>
         <label>Title</label>
         <InputText @bind-Value="movie.Title" class="form-control"></InputText>
@@ -36,8 +36,8 @@
             <label>Poster url</label>
             <InputText @bind-Value="movie.PosterUrl" class="form-control"></InputText>
         </div>
-        <div>
-            <img src="@(string.IsNullOrEmpty(movie.PosterUrl) ? "https://st3.depositphotos.com/4320021/34714/v/450/depositphotos_347143742-stock-illustration-photo-coming-soon-picture-frame.jpg" : movie.PosterUrl)" />
+        <div class="my-3">
+            <img style="max-height: 40vh;"  src="@(string.IsNullOrEmpty(movie.PosterUrl) ? "https://st3.depositphotos.com/4320021/34714/v/450/depositphotos_347143742-stock-illustration-photo-coming-soon-picture-frame.jpg" : movie.PosterUrl)" />
         </div>
     </div>
     <div>
