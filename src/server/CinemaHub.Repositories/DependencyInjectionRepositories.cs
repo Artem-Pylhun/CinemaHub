@@ -1,5 +1,6 @@
 ﻿using CinemaHub.Domain.Entities;
 using CinemaHub.Repositories.Common;
+using CinemaHub.Repositories.Movies;
 using CinemaHub.Repositories.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ namespace CinemaHub.Repositories
         {
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
             services.AddScoped<IUserRepository, UserRoleRepository>();
+            services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<UserManager<User>>();
             services.AddScoped<RoleManager<IdentityRole<Guid>>>();
         }

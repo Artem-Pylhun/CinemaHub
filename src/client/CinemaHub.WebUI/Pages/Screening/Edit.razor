@@ -1,0 +1,94 @@
+﻿@page "/screening/update/{id:guid}"
+@using System.Text.Json
+@inject IObjService<ScreeningDto, ScreeningCreateDto, ScreeningUpdateDto> ScreeningService
+@inject IObjService<MovieDto, MovieCreateDto, MovieUpdateDto> MovieService
+@inject IObjService<HallDto, HallCreateDto, HallUpdateDto> HallService
+@inject IMapper _mapper
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit screening</PageTitle>
+<h3>Edit screening</h3>
+<EditForm Model="screening" OnSubmit="HandleEditSubmit" FormName="EditScreening">
+    <div>
+        <label>Usual price</label>
+        <InputNumber @bind-Value="screening.UsualTicketsPrice" class="form-control"></InputNumber>
+    </div>
+    <div>
+        <label>VIP price</label>
+        <InputNumber @bind-Value="screening.VIPTicketsPrice" class="form-control"></InputNumber>
+    </div>
+    <div>
+        <label>Is 3D capable</label>
+        <input type="checkbox" id="is3D" name="3D" @bind="screening.Is3DCapable" />
+    </div>
+    <div>
+        <label>Start Date</label>
+        <InputDate @bind-Value="selectedDate" class="form-control"></InputDate>
+    </div>
+    <div>
+        <label>Start Time</label>
+        <input type="time" @bind="selectedTime" class="form-control" />
+    </div>
+    <div>
+        <label>Hall</label>
+        <InputSelect @bind-Value="screening.HallId" class="form-control">
+            <option value="">Select hall...</option>
+            @foreach (var hall in halls)
+            {
+                <option value="@hall.Id">@hall.Title</option>
+            }
+        </InputSelect>
+    </div>
+    <div>
+        <label>Movie</label>
+        <InputSelect @bind-Value="screening.MovieId" class="form-control">
+            <option value="">Select movie...</option>
+            @foreach (var movie in movies)
+            {
+                <option value="@movie.Id">@movie.Title</option>
+            }
+        </InputSelect>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Save Screening</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+    ScreeningUpdateDto screening { get; set; } = new ScreeningUpdateDto();
+    private List<MovieDto> movies = new List<MovieDto>();
+    private List<HallDto> halls = new List<HallDto>();
+    private DateTime selectedDate { get; set; } = DateTime.Today;
+    private DateTime selectedTime { get; set; } = DateTime.Now;
+
+    protected override async Task OnInitializedAsync()
+    {
+        halls = await HallService.GetObjects();
+        movies = await MovieService.GetObjects();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+            var result = await ScreeningService.GetObjectById((Guid)Id);
+            if (result is not null)
+            {
+                screening = _mapper.Map<ScreeningUpdateDto>(result);
+
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/hall/add");
+            }
+        }
+    }
+
+    async Task HandleEditSubmit()
+    {
+        screening.StartTime = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, selectedTime.Hour, selectedTime.Minute, 0);
+
+        await ScreeningService.UpdateObject(screening);
+    }
+}

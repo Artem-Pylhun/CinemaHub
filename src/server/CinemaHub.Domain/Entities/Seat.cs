@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace CinemaHub.Domain.Entities
@@ -15,6 +16,7 @@ namespace CinemaHub.Domain.Entities
         public int Column { get; set; }
         public int Number { get; set; }
         public bool IsVIP { get; set; }
+        [JsonIgnore]
         public virtual Hall? Hall { get; set; }
         [ForeignKey(nameof(Hall))]
         public Guid? HallId { get; set; }

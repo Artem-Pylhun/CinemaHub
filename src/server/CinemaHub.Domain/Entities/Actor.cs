@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CinemaHub.Domain.Entities
 {
@@ -18,6 +19,7 @@ namespace CinemaHub.Domain.Entities
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Nationality { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Movie> Movies { get; set; } = new HashSet<Movie>();
         public string? ImagePath { get; set; } = "/img/no_photo.jpg";
         [NotMapped]

@@ -2,6 +2,7 @@
 using CinemaHub.Domain.Entities;
 using CinemaHub.Infrastructure.DTOs;
 using CinemaHub.Repositories.Common;
+using CinemaHub.Repositories.Movies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -12,18 +13,20 @@ namespace CinemaHub.API.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        private readonly IRepository<Movie, Guid> _movieRepository;
+        private readonly IMovieRepository _movieRepository;
         private readonly IRepository<Genre, Guid> _genreRepository;
         private readonly IRepository<Actor, Guid> _actorRepository;
         private readonly IRepository<Director, Guid> _directorRepository;
+        private readonly IRepository<Screening, Guid> _screeningRepository;
         private readonly IMapper _mapper;
 
-        public MovieController(IRepository<Movie, Guid> moviRepository, IRepository<Genre, Guid> genreRepository, IRepository<Actor, Guid> actorRepository, IRepository<Director, Guid> directorRepository, IMapper mapper)
+        public MovieController(IMovieRepository movieRepository, IRepository<Genre, Guid> genreRepository, IRepository<Actor, Guid> actorRepository, IRepository<Director, Guid> directorRepository, IRepository<Screening, Guid> screeningRepository, IMapper mapper)
         {
-            _movieRepository = moviRepository;
+            _movieRepository = movieRepository;
             _genreRepository = genreRepository;
             _actorRepository = actorRepository;
             _directorRepository = directorRepository;
+            _screeningRepository = screeningRepository;
             _mapper = mapper;
         }
         
@@ -56,7 +59,7 @@ namespace CinemaHub.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovieById(Guid id)
         {
-            var movie = await _movieRepository.GetAsync(id);
+            var movie = await _movieRepository.GetMovieAsyncWithIncludes(id);
             if (movie is null)
             {
                 return NotFound("Movie not found");
@@ -72,6 +75,11 @@ namespace CinemaHub.API.Controllers
             {
                 return NotFound("Movie not found");
             }
+            var screenings = (await _screeningRepository.GetAllAsync()).Where(s => s.MovieId == id).ToList();
+            for (int i = 0; i < screenings.Count(); i++)
+            {
+                await _screeningRepository.DeleteAsync(screenings[i].Id);
+            }
             await _movieRepository.DeleteAsync(id);
             return Ok(movie);
         }
@@ -80,18 +88,18 @@ namespace CinemaHub.API.Controllers
         [HttpPut("update")]
         public async Task<ActionResult<Movie>> UpdateMovie(MovieUpdateDto movieDto)
         {
-            var movie = _mapper.Map<Movie>(movieDto);
-            if (movie == null)
+            if (movieDto == null)
             {
                 return BadRequest("Movie not found");
             }
 
-            var existingMovie = await _movieRepository.GetAsync(movie.Id);
-            if (existingMovie is null)
+            var existingMovie = await _movieRepository.GetMovieAsyncWithIncludes(movieDto.Id);
+            if (existingMovie == null)
             {
-                return BadRequest("Movie not found");
+                return NotFound("Movie not found");
             }
 
+            // Update basic fields
             existingMovie.Title = movieDto.Title;
             existingMovie.Description = movieDto.Description;
             existingMovie.Release = movieDto.Release;
@@ -99,12 +107,10 @@ namespace CinemaHub.API.Controllers
             existingMovie.MinAge = movieDto.MinAge;
             existingMovie.Duration = movieDto.Duration;
 
-            var genres = (await _genreRepository.GetAllAsync()).Where(g => movieDto.GenresIds.Contains(g.Id));
-            var actors = (await _actorRepository.GetAllAsync()).Where(a => movieDto.ActorsIds.Contains(a.Id));
-            var directors = (await _directorRepository.GetAllAsync()).Where(d => movieDto.DirectorsIds.Contains(d.Id));
-            existingMovie.Actors = actors.ToList();
-            existingMovie.Directors = directors.ToList();
-            existingMovie.Genres = genres.ToList();
+            // Update relationships
+            existingMovie.Actors = (await _actorRepository.GetAllAsync()).Where(a => movieDto.ActorsIds.Contains(a.Id)).ToList();
+            existingMovie.Directors = (await _directorRepository.GetAllAsync()).Where(d => movieDto.DirectorsIds.Contains(d.Id)).ToList();
+            existingMovie.Genres = (await _genreRepository.GetAllAsync()).Where(g => movieDto.GenresIds.Contains(g.Id)).ToList();
 
             await _movieRepository.UpdateAsync(existingMovie);
             return Ok(existingMovie);

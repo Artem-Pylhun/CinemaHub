@@ -17,6 +17,8 @@ namespace CinemaHub.Infrastructure.DTOs
         public bool Is3DCapable { get; set; }
         public Guid? MovieId { get; set; }
         public Guid? HallId { get; set; }
+        public string? MovieTitle { get; set; }
+        public string? HallTitle { get; set; }
     }
     public class ScreeningCreateDto
     {

@@ -1,0 +1,135 @@
+﻿@page "/movie/update/{id:guid}"
+@using System.Text.Json
+@inject IObjService<MovieDto, MovieCreateDto, MovieUpdateDto> MovieService
+@inject IObjService<ActorDto, ActorCreateDto, ActorUpdateDto> ActorService
+@inject IObjService<DirectorDto, DirectorCreateDto, DirectorUpdateDto> DirectorService
+@inject IObjService<GenreDto, GenreCreateDto, GenreUpdateDto> GenreService
+@inject IMapper _mapper
+@inject NavigationManager NavigationManager
+
+
+<PageTitle>Edit movie @movie.Title</PageTitle>
+<h3>Edit movie @movie.Title</h3>
+<EditForm Model="movie" OnSubmit="HandleEditSubmit" FormName="EditMovie">
+    <div>
+        <label>Title</label>
+        <InputText @bind-Value="movie.Title" class="form-control"></InputText>
+    </div>
+    <div>
+        <label>Description</label>
+        <InputTextArea @bind-Value="movie.Description" class="form-control"></InputTextArea>
+    </div>
+    <div>
+        <label>Release</label>
+        <InputDate @bind-Value="movie.Release" class="form-control"></InputDate>
+    </div>
+    <div>
+        <label>Min age</label>
+        <InputNumber @bind-Value="movie.MinAge" class="form-control"></InputNumber>
+    </div>
+    <div>
+        <label>Duration</label>
+        <InputNumber @bind-Value="movie.Duration" class="form-control"></InputNumber>
+    </div>
+    <div>
+        <div>
+            <label>Poster url</label>
+            <InputText @bind-Value="movie.PosterUrl" class="form-control"></InputText>
+        </div>
+        <div>
+            <img src="@(string.IsNullOrEmpty(movie.PosterUrl) ? "https://st3.depositphotos.com/4320021/34714/v/450/depositphotos_347143742-stock-illustration-photo-coming-soon-picture-frame.jpg" : movie.PosterUrl)" />
+        </div>
+    </div>
+    <div>
+        <label>Actors</label>
+        <select multiple class="form-control" @onchange="OnActorsSelected">
+            @foreach (var actor in actors)
+            {
+                <option value="@actor.Id">@actor.FullName</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label>Directors</label>
+        <select multiple class="form-control" @onchange="OnDirectorsSelected">
+            @foreach (var director in directors)
+            {
+                <option value="@director.Id">@director.FullName</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label>Genres</label>
+        <select multiple class="form-control" @onchange="OnGenresSelected">
+            @foreach (var genre in genres)
+            {
+                <option value="@genre.Id">@genre.Title</option>
+            }
+        </select>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Save Hall</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+    MovieUpdateDto movie { get; set; } = new MovieUpdateDto();
+    List<ActorDto> actors = new List<ActorDto>();
+    List<DirectorDto> directors = new List<DirectorDto>();
+    List<GenreDto> genres = new List<GenreDto>();
+    List<Guid> selectedActors = new List<Guid>();
+    List<Guid> selectedDirectors = new List<Guid>();
+    List<Guid> selectedGenres = new List<Guid>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ActorService.SetEndpoint("actor");
+        DirectorService.SetEndpoint("director");
+        GenreService.SetEndpoint("genre");
+
+        actors = await ActorService.GetObjects();
+        directors = await DirectorService.GetObjects();
+        genres = await GenreService.GetObjects();
+    }
+
+    async Task HandleEditSubmit()
+    {
+        movie.GenresIds = selectedGenres;
+        movie.ActorsIds = selectedActors;
+        movie.DirectorsIds = selectedDirectors;
+        await MovieService.UpdateObject(movie);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+            var result = await MovieService.GetObjectById((Guid)Id);
+            if (result is not null)
+            {
+                movie = _mapper.Map<MovieUpdateDto>(result);
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/movie/add");
+            }
+        }
+    }
+
+    void OnActorsSelected(ChangeEventArgs e)
+    {
+        var actors = ((IEnumerable<object>)((ChangeEventArgs)e).Value);
+        selectedActors = actors.Select(option => Guid.Parse(option.ToString())).ToList();
+    }
+    void OnDirectorsSelected(ChangeEventArgs e)
+    {
+        var directors = ((IEnumerable<object>)((ChangeEventArgs)e).Value);
+        selectedDirectors = directors.Select(option => Guid.Parse(option.ToString())).ToList();
+    }
+    void OnGenresSelected(ChangeEventArgs e)
+    {
+        var genres = ((IEnumerable<object>)((ChangeEventArgs)e).Value);
+        selectedGenres = genres.Select(option => Guid.Parse(option.ToString())).ToList();
+    }
+}

@@ -4,6 +4,7 @@ using CinemaHub.API.Interfaces;
 using CinemaHub.Domain.Context;
 using CinemaHub.Domain.Entities;
 using CinemaHub.Repositories.Common;
+using CinemaHub.Repositories.Movies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
@@ -58,6 +59,7 @@ namespace CinemaHub.API
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+            builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<IFileService, FileService>();
             var app = builder.Build();
             app.UseCors("AllowBlazorClient");

@@ -1,0 +1,57 @@
+﻿@page "/movie/details/{id:guid}"
+@using System.Text.Json
+@inject IObjService<MovieDto, MovieCreateDto, MovieUpdateDto> MovieService
+@inject IObjService<ActorDto, ActorCreateDto, ActorUpdateDto> ActorService
+@inject IObjService<DirectorDto, DirectorCreateDto, DirectorUpdateDto> DirectorService
+@inject IObjService<GenreDto, GenreCreateDto, GenreUpdateDto> GenreService
+@inject IMapper _mapper
+@inject NavigationManager NavigationManager
+
+
+<PageTitle>Movie @movie.Title</PageTitle>
+<div class="d-flex flex-row justify-content-around">
+    <div>
+        <h3>@movie.Title @movie.MinAge +</h3>
+        <img src="@movie.PosterUrl" />
+    </div>
+    <div class="d-flex flex-column justify-content-between">
+        <p>Release date: @movie.Release.ToShortDateString()</p>
+        <p>Duration minutes: @movie.Duration</p>
+        <p>@(movie.Genres != null ? string.Join(", ", movie.Genres) : "No genres available")</p>
+        <p>@(movie.Actors != null ? string.Join(", ", movie.Actors) : "No actors available")</p>
+        <p>@(movie.Directors != null ? string.Join(", ", movie.Directors) : "No directors available")</p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+    MovieDetailsDto movie { get; set; } = new MovieDetailsDto();
+    List<ActorDto> actors = new List<ActorDto>();
+    List<DirectorDto> directors = new List<DirectorDto>();
+    List<GenreDto> genres = new List<GenreDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        MovieService.SetEndpoint("movie");
+        ActorService.SetEndpoint("actor");
+        DirectorService.SetEndpoint("director");
+        GenreService.SetEndpoint("genre");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+            var result = await MovieService.GetObjectById((Guid)Id);
+            if (result is not null)
+            {
+                movie = _mapper.Map<MovieDetailsDto>(result);
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/movie/get-all");
+            }
+        }
+    }
+}
