@@ -45,7 +45,7 @@ else
                     <td><strong>@screening.VIPTicketsPrice</strong></td>
                     <td><strong>@screening.StartTime</strong></td>
                     <td><strong>@screening.Is3DCapable</strong></td>
-                    <td class="text-center d-flex justify-content-evenly gap-1">
+                    <td class="d-flex flex-column gap-2 align-content-center justify-content-around">
                         <a href="screening/update/@screening.Id" class="btn btn-warning">Edit</a>
                         <button @onclick="() => Delete(screening.Id)" class="btn btn-danger">Delete</button>
                     </td>

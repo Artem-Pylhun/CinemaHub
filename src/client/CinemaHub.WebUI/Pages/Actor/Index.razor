@@ -44,9 +44,9 @@ else
                         <td><strong>@actor.DateOfBirth.ToString("dd.MM.yyyy")</strong></td>
                         <td><strong>@actor.Nationality</strong></td>
                         <td><img src="@GetImageUrl(@actor.ImagePath)" style="max-width: 300px; max-height: 300px;" /></td>
-                        <td class="text-center d-flex justify-content-evenly">
-                            <a href="actor/update/@actor.Id" class="btn btn-warning w-25">Edit</a>
-                            <button @onclick="() => Delete(actor.Id)" class="btn btn-danger w-25">Delete</button>
+                        <td class="text-center d-flex flex-column gap-3 justify-content-center align-self-center">
+                            <a href="actor/update/@actor.Id" class="btn btn-warning">Edit</a>
+                            <button @onclick="() => Delete(actor.Id)" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
                 }
@@ -57,8 +57,8 @@ else
         <div class="row d-flex flex-row gap-3 justify-content-around">
             @foreach (var actor in actors)
             {
-                <div class="card col-3" style="width: 18rem;">
-                    <img class="card-img-top" src="@GetImageUrl(actor.ImagePath)" alt="Card image cap">
+                <div class="card col-3 mb-5" style="width: 18rem;">
+                    <img class="card-img-top mt-3" src="@GetImageUrl(actor.ImagePath)"  alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">@actor.FullName</h5>
                     </div>

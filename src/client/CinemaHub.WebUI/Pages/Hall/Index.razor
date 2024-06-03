@@ -31,6 +31,7 @@ else
                 <th>Columns</th>
                 <th>Cinema Title</th>
                 <th>Screen size</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -42,9 +43,9 @@ else
                     <td><strong>@hall.ColumnsNumber</strong></td>
                     <td><strong>@hall.CinemaTitle</strong></td>
                     <td><strong>@hall.ScreenSize</strong></td>
-                    <td class="text-center d-flex justify-content-evenly">
-                        <a href="hall/update/@hall.Id" class="btn btn-warning w-25">Edit</a>
-                        <button @onclick="() => Delete(hall.Id)" class="btn btn-danger w-25">Delete</button>
+                    <td class="d-flex flex-column gap-2 align-content-center justify-content-around">
+                        <a href="hall/update/@hall.Id" class="btn btn-warning">Edit</a>
+                        <button @onclick="() => Delete(hall.Id)" class="btn btn-danger">Delete</button>
                     </td>
                 </tr>
             }

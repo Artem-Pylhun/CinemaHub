@@ -36,9 +36,9 @@ else
                 <tr class="text-center align-middle">
                     <td><strong>@screenSize.Width</strong></td>
                     <td><strong>@screenSize.Height</strong></td>
-                    <td class="text-center d-flex justify-content-evenly">
-                        <a href="screenSize/update/@screenSize.Id" class="btn btn-warning w-25">Edit</a>
-                        <button @onclick="() => Delete(screenSize.Id)" class="btn btn-danger w-25">Delete</button>
+                    <td class="d-flex flex-column gap-2 align-content-center justify-content-around">
+                        <a href="screenSize/update/@screenSize.Id" class="btn btn-warning">Edit</a>
+                        <button @onclick="() => Delete(screenSize.Id)" class="btn btn-danger">Delete</button>
                     </td>
                 </tr>
             }
